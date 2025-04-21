@@ -1,0 +1,11 @@
+<nav>
+    <ul>
+      <li *ngIf="!isAuthenticated">
+        <button (click)="login()">Login</button>
+      </li>
+      <li *ngIf="isAuthenticated">
+        <button (click)="logout()">Logout</button>
+      </li>
+    </ul>
+  </nav>
+  

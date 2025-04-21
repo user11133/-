@@ -1,0 +1,21 @@
+/* src/app/components/navbar/navbar.component.css */
+nav {
+    background-color: #333;
+    padding: 10px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  button {
+    background-color: #444;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #555;
+  }
+  

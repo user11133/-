@@ -1,0 +1,77 @@
+<div class="container mt-4">
+    <h2>Restaurant List</h2>
+  
+    <!-- Message when no restaurants are available -->
+    <p *ngIf="restaurants.length === 0">No restaurants found.</p>
+  
+    <!-- Restaurant grid -->
+    <div class="row g-4">
+      <div class="col-12 col-md-6 col-lg-4" *ngFor="let restaurant of restaurants">
+        <div class="card h-100 shadow-sm">
+  
+          <!-- Restaurant image -->
+          <img 
+            [src]="restaurant.imageURL || 'https://placehold.co/600x400?text=Restaurant+Image'" 
+            class="card-img-top" 
+            alt="{{ restaurant.nom }}"
+            style="height: 200px; object-fit: cover;"
+          >
+  
+          <!-- Restaurant details -->
+          <div class="card-body">
+            <h5 class="card-title">{{ restaurant.nom }}</h5>
+  
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="badge bg-warning text-dark">{{ restaurant.nbEtoiles }} ⭐</span>
+              <span class="text-success fw-bold">{{ restaurant.prixMoyen }} TND</span>
+            </div>
+  
+            <p class="card-text">
+              <i class="fas fa-map-marker-alt text-danger me-1"></i> 
+              {{ restaurant.ville }}, {{ restaurant.adresse }}
+            </p>
+  
+            <p class="card-text small text-muted">{{ restaurant.description }}</p>
+          </div>
+  
+          <!-- Buttons -->
+          <div class="card-footer bg-white border-0 d-flex justify-content-between">
+            <button class="btn btn-sm btn-outline-primary" (click)="toggleMenu(restaurant.idRestaurant)">
+              {{ expandedRestaurantId === restaurant.idRestaurant ? 'Hide Menu' : 'View Menu' }}
+            </button>
+            <button class="btn btn-sm btn-primary">Reserve</button>
+          </div>
+  
+          <!-- Expandable Menu Section -->
+          <div *ngIf="expandedRestaurantId === restaurant.idRestaurant" class="p-3">
+            <h6 class="fw-bold">Menu</h6>
+  
+            <div *ngIf="menus[restaurant.idRestaurant] && menus[restaurant.idRestaurant].length > 0; else noMenu">
+
+
+              <div *ngFor="let item of menus[restaurant.idRestaurant]" class="border rounded p-2 mb-2 d-flex align-items-center">
+                <img 
+                  [src]="item.imageURL || 'https://placehold.co/80x80?text=Plat'" 
+                  alt="Plat" 
+                  style="width: 80px; height: 80px; object-fit: cover;" 
+                  class="me-3 rounded"
+                >
+                <div>
+                  <h6 class="mb-1">{{ item.nomPlat }}</h6>
+                  <p class="mb-1 small text-muted">{{ item.description }}</p>
+                  <strong>{{ item.prix }} TND</strong>
+                </div>
+              </div>
+            </div>
+  
+            <!-- If no menu items found -->
+            <ng-template #noMenu>
+              <p class="text-muted small">No menu items available.</p>
+            </ng-template>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  

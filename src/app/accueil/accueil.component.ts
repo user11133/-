@@ -1,0 +1,13 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+
+@Component({
+  standalone:true,
+  selector: 'app-accueil',
+  imports: [CommonModule],
+  templateUrl: './accueil.component.html',
+  styleUrl: './accueil.component.css'
+})
+export class AccueilComponent {
+
+}

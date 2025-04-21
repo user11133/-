@@ -1,0 +1,39 @@
+<div class="form-wrapper">
+  <div class="form-box">
+    <h2>Register</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Nom input -->
+      <div class="input-wrapper">
+        <i class="bi bi-person"></i> <!-- Icon for Name -->
+        <input type="text" placeholder="Nom" formControlName="nom" />
+      </div>
+      
+      <!-- Prénom input -->
+      <div class="input-wrapper">
+        <i class="bi bi-person"></i> <!-- Icon for Last Name -->
+        <input type="text" placeholder="Prénom" formControlName="prenom" />
+      </div>
+      
+      <!-- Email input -->
+      <div class="input-wrapper">
+        <i class="bi bi-envelope"></i> <!-- Icon for Email -->
+        <input type="email" placeholder="Email" formControlName="email" />
+      </div>
+      
+      <!-- Mot de passe input -->
+      <div class="input-wrapper">
+        <i class="bi bi-lock"></i> <!-- Icon for Password -->
+        <input type="password" placeholder="Mot de passe" formControlName="motDePasse" />
+      </div>
+      
+      <!-- Submit button -->
+      <button type="submit">Register</button>
+    </form>
+
+    <!-- Login option -->
+    <div class="login-option">
+      <p>Already have an account? <button (click)="navigateToLogin()" class="login-link">Login</button></p>
+    </div>
+  </div>
+</div>

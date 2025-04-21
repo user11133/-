@@ -1,0 +1,25 @@
+.card {
+    transition: transform 0.2s;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-img-top {
+    border-bottom: 1px solid #eee;
+  }
+  /* Active state for star filter buttons */
+.btn-outline-primary.active {
+    background-color: #0d6efd;
+    color: white;
+  }
+  
+  /* Price range inputs */
+  .input-group-text {
+    background-color: #f8f9fa;
+  }
