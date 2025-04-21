@@ -1,8 +1,27 @@
-<!-- navbar.component.html -->
-<nav>
-  <a routerLink="/" routerLinkActive="active">Accueil | </a>
-  <a routerLink="/hotel-list" routerLinkActive="active">Hotels | </a>
-  <a routerLink="/rest-list" routerLinkActive="active">Restaurant | </a>
-  <a routerLink="/register" routerLinkActive="active">Register | </a>
-  <a routerLink="/login" routerLinkActive="active">Log in </a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+  <a class="navbar-brand" routerLink="/">Agence de séjour</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarNav"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/register">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/rest-list">Resto</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/hotel-list">Hotel</a>
+      </li>
+    </ul>
+  </div>
 </nav>

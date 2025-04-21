@@ -1,27 +1,22 @@
-/* src/app/components/navbar/navbar.component.css */
 nav {
-    background-color: #333;
-    padding: 10px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  button {
-    background-color: #444;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #555;
-  }
-  /* Example active link styling */
-a.active {
-  font-weight: bold;
-  color: #ff5722; /* Orange color */
+  background-color: #333;
+  padding: 10px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
 }
 
-  
+button {
+  background-color: #444;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555;
+}
+.navbar-nav .nav-link {
+  margin-left: 15px;
+}
