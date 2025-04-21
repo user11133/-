@@ -1,11 +1,8 @@
+<!-- navbar.component.html -->
 <nav>
-    <ul>
-      <li *ngIf="!isAuthenticated">
-        <button (click)="login()">Login</button>
-      </li>
-      <li *ngIf="isAuthenticated">
-        <button (click)="logout()">Logout</button>
-      </li>
-    </ul>
-  </nav>
-  
+  <a routerLink="/" routerLinkActive="active">Accueil | </a>
+  <a routerLink="/hotel-list" routerLinkActive="active">Hotels | </a>
+  <a routerLink="/rest-list" routerLinkActive="active">Restaurant | </a>
+  <a routerLink="/register" routerLinkActive="active">Register | </a>
+  <a routerLink="/login" routerLinkActive="active">Log in </a>
+</nav>

@@ -35,7 +35,7 @@ export class LoginComponent {
         next: (res) => {
           if (res.success) {
             this.snackBar.open('Login successful!', 'Close', { duration: 3000 });
-            this.router.navigate(['/  ']);
+            this.router.navigate(['/']);
           } else {
             this.snackBar.open(res.message || 'Login failed.', 'Close', { duration: 3000 });
           }

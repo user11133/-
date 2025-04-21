@@ -18,4 +18,10 @@ nav {
   button:hover {
     background-color: #555;
   }
+  /* Example active link styling */
+a.active {
+  font-weight: bold;
+  color: #ff5722; /* Orange color */
+}
+
   
