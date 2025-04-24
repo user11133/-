@@ -5,12 +5,14 @@ import { HotelListComponent } from './components/hotel-list/hotel-list.component
 import { RestListComponent } from './components/rest-list/rest-list.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 export const routes: Routes = [
   { path: '', component: AccueilComponent },
   { path: 'hotel-list', component: HotelListComponent },
   { path: 'rest-list', component: RestListComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path : 'dashboard',component : DashboardComponent}
 ];
     

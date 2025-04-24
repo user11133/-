@@ -23,7 +23,7 @@ export class AuthService {
   register(data: {
     nom: string;
     prenom: string;
-    email: string;
+    email: string; 
     motDePasse: string;
   }): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}/register.php`, data);

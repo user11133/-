@@ -1,0 +1,54 @@
+<div class="container py-4">
+    <h2 class="mb-4">Admin Dashboard</h2>
+  
+    <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+      <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#hotels">Hotels</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#events">Events</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#restaurants">Restaurants</a></li>
+    </ul>
+  
+    <div class="tab-content mt-3">
+      <!-- Hotels Tab -->
+      <div class="tab-pane fade show active" id="hotels">
+        <div class="d-flex justify-content-between mb-2">
+          <h5>Manage Hotels</h5>
+          <button class="btn btn-primary" (click)="openModal('add')">Add Hotel</button>
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr><th>Name</th><th>Location</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let hotel of hotels">
+              <td>{{ hotel.nom }}</td>
+              <td>{{ hotel.ville }}</td>
+              <td>
+                <button class="btn btn-sm btn-warning" (click)="openModal('edit', hotel)">Edit</button>
+                <button class="btn btn-sm btn-danger" (click)="deleteHotel(hotel.idHotel)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal for Add/Edit -->
+  <div *ngIf="showModal" class="modal fade show d-block" id="entryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <form class="modal-content" (ngSubmit)="saveHotel()">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ modalType === 'add' ? 'Add' : 'Edit' }} Entry</h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" [(ngModel)]="modalData.nom" name="name" class="form-control mb-2" placeholder="Name" required>
+          <input type="text" [(ngModel)]="modalData.ville" name="location" class="form-control" placeholder="Location" required>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">{{ modalType === 'add' ? 'Save' : 'Update' }}</button>
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
