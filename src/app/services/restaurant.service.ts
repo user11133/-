@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// Define the Restaurant interface
 export interface Restaurant {
   idRestaurant: number;
   nom: string;
@@ -16,15 +15,26 @@ export interface Restaurant {
 }
 
 @Injectable({
-  providedIn: 'root'  // Makes the service available globally
+  providedIn: 'root'
 })
 export class RestaurantService {
-  private apiUrl = 'http://localhost/api/get-restaurants.php';  // Update with your API endpoint
+  private apiUrl = 'http://localhost/api';
 
   constructor(private http: HttpClient) {}
 
-  // Method to fetch the list of restaurants
   getRestaurants(): Observable<Restaurant[]> {
-    return this.http.get<Restaurant[]>(this.apiUrl);
+    return this.http.get<Restaurant[]>(`${this.apiUrl}/get-restaurants.php`);
+  }
+
+  addRestaurant(restaurant: Restaurant): Observable<any> {
+    return this.http.post(`${this.apiUrl}/add-rest.php`, restaurant);
+  }
+
+  updateRestaurant(restaurant: Restaurant): Observable<any> {
+    return this.http.put(`${this.apiUrl}/update-rest.php`, restaurant);
+  }
+
+  deleteRestaurant(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/delete-rest.php?id=${id}`);
   }
 }

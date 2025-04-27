@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HotelService, Hotel } from './../../services/hotel.service'; // adjust if path differs
-import { MatSnackBar } from '@angular/material/snack-bar'; // import MatSnackBar
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // Import and Module!
+import { HotelService, Hotel } from './../../services/hotel.service'; // HotelService and Hotel
 
 @Component({
   selector: 'app-hotel-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatSnackBarModule], // Import both CommonModule and MatSnackBarModule
   templateUrl: './hotel-list.component.html',
   styleUrls: ['./hotel-list.component.css']
 })
@@ -14,20 +14,19 @@ export class HotelListComponent implements OnInit {
   hotels: Hotel[] = [];
 
   constructor(
-    private hotelService: HotelService, // Hotel service to fetch data
-    private snackBar: MatSnackBar // Inject MatSnackBar for showing notifications
+    private hotelService: HotelService, // Inject HotelService
+    private snackBar: MatSnackBar // Inject MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.hotelService.getHotels().subscribe({
-      next: (data) => {
+      next: (data: Hotel[]) => {
         this.hotels = data;
       },
-      error: (err) => {
-        // Show an error message in a snackbar on error
+      error: (err: any) => {
         console.error('Error fetching hotels:', err);
         this.snackBar.open('Failed to fetch hotel data. Please try again later.', 'Close', {
-          duration: 3000, // Automatically close after 3 seconds
+          duration: 3000,
         });
       }
     });

@@ -1,54 +1,203 @@
-<div class="container py-4">
-    <h2 class="mb-4">Admin Dashboard</h2>
+<div class="container">
+  <h1>Dashboard</h1>
+
+  <!-- Hotels Section -->
+  <div class="card mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h2>Hotels</h2>
+      <button class="btn btn-primary" (click)="openAddHotelModal()">Add Hotel</button>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price per Night</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hotel of hotels">
+            <td>{{ hotel.nom }}</td>
+            <td>{{ hotel.description }}</td>
+            <td>{{ hotel.prixParNuit | currency:'EUR' }}</td>
+            <td>
+              <button class="btn btn-warning btn-sm" (click)="openEditHotelModal(hotel)">Edit</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteHotel(hotel.idHotel)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Restaurants Section -->
+  <div class="card mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h2>Restaurants</h2>
+      <button class="btn btn-primary" (click)="openAddRestaurantModal()">Add Restaurant</button>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Average Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let restaurant of restaurants">
+            <td>{{ restaurant.nom }}</td>
+            <td>{{ restaurant.description }}</td>
+            <td>{{ restaurant.prixMoyen | currency:'EUR' }}</td>
+            <td>
+              <button class="btn btn-warning btn-sm" (click)="openEditRestaurantModal(restaurant)">Edit</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteRestaurant(restaurant.idRestaurant)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
   
-    <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
-      <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#hotels">Hotels</a></li>
-      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#events">Events</a></li>
-      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#restaurants">Restaurants</a></li>
-    </ul>
-  
-    <div class="tab-content mt-3">
-      <!-- Hotels Tab -->
-      <div class="tab-pane fade show active" id="hotels">
-        <div class="d-flex justify-content-between mb-2">
-          <h5>Manage Hotels</h5>
-          <button class="btn btn-primary" (click)="openModal('add')">Add Hotel</button>
+  <!-- Hotel Modal -->
+  <div class="modal" tabindex="-1" [ngClass]="{'d-block': showHotelModal, 'd-none': !showHotelModal}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ editMode ? 'Edit Hotel' : 'Add Hotel' }}</h5>
+          <button type="button" class="btn-close" (click)="closeHotelModal()"></button>
         </div>
-        <table class="table table-striped">
-          <thead>
-            <tr><th>Name</th><th>Location</th><th>Actions</th></tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let hotel of hotels">
-              <td>{{ hotel.nom }}</td>
-              <td>{{ hotel.ville }}</td>
-              <td>
-                <button class="btn btn-sm btn-warning" (click)="openModal('edit', hotel)">Edit</button>
-                <button class="btn btn-sm btn-danger" (click)="deleteHotel(hotel.idHotel)">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="modal-body">
+          <form [formGroup]="hotelForm">
+            <div class="mb-3">
+              <label for="hotelName" class="form-label">Name</label>
+              <input type="text" class="form-control" id="hotelName" formControlName="nom">
+              <div *ngIf="hotelForm.get('nom')?.invalid && hotelForm.get('nom')?.touched" class="text-danger">
+                Name is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="hotelDescription" class="form-label">Description</label>
+              <textarea class="form-control" id="hotelDescription" rows="3" formControlName="description"></textarea>
+              <div *ngIf="hotelForm.get('description')?.invalid && hotelForm.get('description')?.touched" class="text-danger">
+                Description is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="hotelAddress" class="form-label">Address</label>
+              <input type="text" class="form-control" id="hotelAddress" formControlName="adresse">
+              <div *ngIf="hotelForm.get('adresse')?.invalid && hotelForm.get('adresse')?.touched" class="text-danger">
+                Address is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="hotelCity" class="form-label">City</label>
+              <input type="text" class="form-control" id="hotelCity" formControlName="ville">
+              <div *ngIf="hotelForm.get('ville')?.invalid && hotelForm.get('ville')?.touched" class="text-danger">
+                City is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="hotelStars" class="form-label">Stars</label>
+              <input type="number" class="form-control" id="hotelStars" min="1" max="5" formControlName="nbEtoiles">
+              <div *ngIf="hotelForm.get('nbEtoiles')?.invalid && hotelForm.get('nbEtoiles')?.touched" class="text-danger">
+                Stars must be between 1 and 5
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="hotelPrice" class="form-label">Price per Night</label>
+              <input type="number" class="form-control" id="hotelPrice" min="0" step="0.01" formControlName="prixParNuit">
+              <div *ngIf="hotelForm.get('prixParNuit')?.invalid && hotelForm.get('prixParNuit')?.touched" class="text-danger">
+                Price must be a positive number
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeHotelModal()">Cancel</button>
+          <button type="button" class="btn btn-primary" [disabled]="hotelForm.invalid" (click)="submitHotelForm()">
+            {{ editMode ? 'Update' : 'Add' }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
   
-  <!-- Modal for Add/Edit -->
-  <div *ngIf="showModal" class="modal fade show d-block" id="entryModal" tabindex="-1" aria-hidden="true">
+  <!-- Restaurant Modal -->
+  <div class="modal" tabindex="-1" [ngClass]="{'d-block': showRestaurantModal, 'd-none': !showRestaurantModal}">
     <div class="modal-dialog">
-      <form class="modal-content" (ngSubmit)="saveHotel()">
+      <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">{{ modalType === 'add' ? 'Add' : 'Edit' }} Entry</h5>
-          <button type="button" class="btn-close" (click)="closeModal()"></button>
+          <h5 class="modal-title">{{ editMode ? 'Edit Restaurant' : 'Add Restaurant' }}</h5>
+          <button type="button" class="btn-close" (click)="closeRestaurantModal()"></button>
         </div>
         <div class="modal-body">
-          <input type="text" [(ngModel)]="modalData.nom" name="name" class="form-control mb-2" placeholder="Name" required>
-          <input type="text" [(ngModel)]="modalData.ville" name="location" class="form-control" placeholder="Location" required>
+          <form [formGroup]="restaurantForm">
+            <div class="mb-3">
+              <label for="restaurantName" class="form-label">Name</label>
+              <input type="text" class="form-control" id="restaurantName" formControlName="nom">
+              <div *ngIf="restaurantForm.get('nom')?.invalid && restaurantForm.get('nom')?.touched" class="text-danger">
+                Name is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="restaurantDescription" class="form-label">Description</label>
+              <textarea class="form-control" id="restaurantDescription" rows="3" formControlName="description"></textarea>
+              <div *ngIf="restaurantForm.get('description')?.invalid && restaurantForm.get('description')?.touched" class="text-danger">
+                Description is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="restaurantAddress" class="form-label">Address</label>
+              <input type="text" class="form-control" id="restaurantAddress" formControlName="adresse">
+              <div *ngIf="restaurantForm.get('adresse')?.invalid && restaurantForm.get('adresse')?.touched" class="text-danger">
+                Address is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="restaurantCity" class="form-label">City</label>
+              <input type="text" class="form-control" id="restaurantCity" formControlName="ville">
+              <div *ngIf="restaurantForm.get('ville')?.invalid && restaurantForm.get('ville')?.touched" class="text-danger">
+                City is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="restaurantCuisine" class="form-label">Cuisine Type</label>
+              <input type="text" class="form-control" id="restaurantCuisine" formControlName="typeCuisine">
+              <div *ngIf="restaurantForm.get('typeCuisine')?.invalid && restaurantForm.get('typeCuisine')?.touched" class="text-danger">
+                Cuisine type is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="restaurantStars" class="form-label">Stars</label>
+              <input type="number" class="form-control" id="restaurantStars" min="1" max="5" formControlName="nbEtoiles">
+              <div *ngIf="restaurantForm.get('nbEtoiles')?.invalid && restaurantForm.get('nbEtoiles')?.touched" class="text-danger">
+                Stars must be between 1 and 5
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="restaurantPrice" class="form-label">Average Price</label>
+              <input type="number" class="form-control" id="restaurantPrice" min="0" step="0.01" formControlName="prixMoyen">
+              <div *ngIf="restaurantForm.get('prixMoyen')?.invalid && restaurantForm.get('prixMoyen')?.touched" class="text-danger">
+                Price must be a positive number
+              </div>
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success">{{ modalType === 'add' ? 'Save' : 'Update' }}</button>
-          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+          <button type="button" class="btn btn-secondary" (click)="closeRestaurantModal()">Cancel</button>
+          <button type="button" class="btn btn-primary" [disabled]="restaurantForm.invalid" (click)="submitRestaurantForm()">
+            {{ editMode ? 'Update' : 'Add' }}
+          </button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
+  
+  <!-- Modal backdrop -->
+  <div class="modal-backdrop fade show" *ngIf="showHotelModal || showRestaurantModal"></div>
+</div>
