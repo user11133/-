@@ -9,18 +9,46 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav ms-auto">
+    <ul class="navbar-nav me-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/login">Login</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/register">Register</a>
+        <a class="nav-link" routerLink="/hotel-list">Hotel</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/rest-list">Resto</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/hotel-list">Hotel</a>
+      <!-- Show dashboard link only for admins -->
+      <li class="nav-item" *ngIf="isLoggedIn && isAdmin()">
+        <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+      </li>
+    </ul>
+    
+    <ul class="navbar-nav ml-auto">
+      <!-- When user is not logged in -->
+      <ng-container *ngIf="!isLoggedIn">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register">Register</a>
+        </li>
+      </ng-container>
+      
+      <!-- When user is logged in -->
+      <li class="nav-item dropdown" *ngIf="isLoggedIn">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+           data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-person-circle"></i> {{ userDisplayName }}
+          <span class="badge bg-info ms-1" *ngIf="isAdmin()">Admin</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item disabled">ID: {{ currentUser?.idClient }}</a></li>
+          <li><a class="dropdown-item disabled">{{ currentUser?.email }}</a></li>
+          <li><a class="dropdown-item disabled">Role: {{ currentUser?.role }}</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="javascript:void(0)" (click)="logout()">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </a></li>
+        </ul>
       </li>
     </ul>
   </div>
